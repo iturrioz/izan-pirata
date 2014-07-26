@@ -10,7 +10,8 @@ public class Partida {
 	private Map<Integer,Rejilla> rejillas = null;
 	private int idPartida = -1;
 	
-	private int dimX = -1, dimY = -1;
+	private final int DIM_X = 3;
+    private final int DIM_Y = 3;
 	private List<Jugador> jugadores = null;
 	private int indexTurno = 0;
 	
@@ -21,16 +22,13 @@ public class Partida {
 	public Partida(int idPartida){
 		this.idPartida = idPartida;
 
-		dimX = 3;
-		dimY = 3;
-
 		jugadores = new ArrayList<Jugador>();
 		Jugador jug = null;
 		jug = new Jugador();
-		jug.setIdJugador(1);
+		jug.setIdJugador(0);
 		jugadores.add(jug);
 		jug = new Jugador();
-		jug.setIdJugador(2);
+		jug.setIdJugador(1);
 		jugadores.add(jug);
 		
 		initPartida();
@@ -43,7 +41,7 @@ public class Partida {
 	private void initPartida(){
 		rejillas = new HashMap<Integer,Rejilla>();
 		for(int i=0;i<jugadores.size();i++){
-			rejillas.put(jugadores.get(i).getIdJugador(), new Rejilla(dimX,dimY));
+			rejillas.put(jugadores.get(i).getIdJugador(), new Rejilla(DIM_X,DIM_Y));
 		}
 	}
 	
@@ -128,8 +126,6 @@ public class Partida {
         final JSONObject retVal = new JSONObject();
         try {
             retVal.put("idPartida", idPartida);
-            retVal.put("dimX", dimX);
-            retVal.put("dimY", dimY);
             retVal.put("indexTurno", indexTurno);
             retVal.put("ultimoEvento", ultimoEvento);
             retVal.put("estadoPartida", estadoPartida.name());
@@ -151,8 +147,6 @@ public class Partida {
         try {
             final JSONObject obj = new JSONObject(json);
             idPartida = obj.getInt("idPartida");
-            dimX = obj.getInt("dimX");
-            dimY = obj.getInt("dimY");
             indexTurno = obj.getInt("indexTurno");
             ultimoEvento = obj.getString("ultimoEvento");
             estadoPartida = EstadoPartida.valueOf(obj.getString("estadoPartida"));
