@@ -12,25 +12,33 @@ import java.util.Random;
 public class Application extends Controller {
 
     public static Result index() {
-        Partida partida = null;
         int gameId;
         
         try {
             gameId = Integer.parseInt(session("connected"));
-            System.out.println("Game already exists!");
             return redirect(controllers.routes.Application.game(gameId));
         } catch (NumberFormatException e) {
-            System.out.println("New game");
-            gameId = new Random().nextInt(100000);
-            session("connected", ""+gameId);
         }
-        partida = new Partida(gameId);
         
         return ok(index.render(3, 3, 2));
     }
 
+    public static Result create() {
+        // Partida sortu
+        // gameId = new Random().nextInt(100000);
+        // session("connected", ""+gameId);
+        int gameId = 0;
+        return redirect(controllers.routes.Application.game(gameId));
+    }
+
     public static Result game(int gameId) {
-        return ok("TODO");
+        Partida partida = Partida.load(gameId);
+        int jugador = 0;
+        if (partida != null) {
+            return ok(game.render(partida, jugador));
+        } else {
+            return notFound();
+        }
     }
 
     public static Result shoots() {
@@ -49,5 +57,11 @@ public class Application extends Controller {
         System.out.println(bomb.y);
         // gordeDB
         return redirect(routes.Application.index());
+    }
+
+    public static Result reset() {
+        session().clear();
+
+        return redirect(controllers.routes.Application.index());
     }
 }

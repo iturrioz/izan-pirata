@@ -20,10 +20,23 @@ public class Partida {
     private String ultimoEvento = null;
     private EstadoPartida estadoPartida = EstadoPartida.EN_CURSO;
 
+    public static Partida load(int gameId) {
+        Jedis j = play.Play.application().plugin(RedisPlugin.class).jedisPool().getResource();
+        try {
+            //All messages are pushed through the pub/sub channel
+            String strPartida = j.get(String.valueOf(gameId));
+            return new Partida(strPartida);
+        } catch (NullPointerException e) {
+            System.out.println(e);
+        } finally {
+            play.Play.application().plugin(RedisPlugin.class).jedisPool().returnResource(j);
+        }
+
+        return null;
+    }
 
     public Partida(int idPartida){
         this.idPartida = idPartida;
-        load();
 
         jugadores = new ArrayList<Jugador>();
         Jugador jug = null;

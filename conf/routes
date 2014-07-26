@@ -7,6 +7,7 @@ GET     /                 controllers.Application.index()
 GET     /game/:gameId     controllers.Application.game(gameId: Int)
 POST    /ships            controllers.Application.ships()
 POST    /shoots           controllers.Application.shoots()
+GET     /reset            controllers.Application.reset()
 
 # Map static resources from the /public folder to the /assets URL path
 GET /assets/*file controllers.Assets.at(path="/public", file)
