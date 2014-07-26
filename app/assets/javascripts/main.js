@@ -1,12 +1,6 @@
 ;(function() {
   'use strict';
 
-  var selectionParameters = {
-    dimX: 3,
-    dimY: 3,
-    ships: 2
-  };
-
   var shipsLeft = 0;
 
   $(function() {
