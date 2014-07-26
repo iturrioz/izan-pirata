@@ -1,31 +1,6 @@
 ;(function() {
   'use strict';
 
-  var starting = {
-    idPartida: 0,
-    dimX: 3,
-    dimY: 3,
-
-    jugadores: [
-      {
-        id: 1,
-        rejilla: [
-          ["AGUA", "AGUA_TOCADA", "AGUA"],
-          ["AGUA", "AGUA", "AGUA"],
-          ["AGUA", "AGUA", "AGUA"]
-        ]
-      },
-      {
-        id: 2,
-        rejilla: [
-          ["AGUA_TOCADA", "AGUA", "AGUA"],
-          ["AGUA", "AGUA", "AGUA"],
-          ["AGUA_TOCADA", "AGUA", "AGUA"]
-        ]
-      }
-    ]
-  };
-
   $(function() {
 
     initializeTable(starting);
