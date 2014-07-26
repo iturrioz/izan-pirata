@@ -8,13 +8,13 @@ import java.util.Map.Entry;
 import models.logic.Partida;
 import models.logic.Rejilla;
 
-public class EstadoPartida implements Serializable{
+public class Turno implements Serializable{
 	private int idPartida = -1;
 	private List<JugadorRejilla> rejillas = null;
 	private String ultimoEvento = null;
 	private int siguienteJugador = -1;
 
-	public EstadoPartida(Partida partida){
+	public Turno(Partida partida){
 		fill(partida);
 	}
 	
@@ -64,8 +64,8 @@ public class EstadoPartida implements Serializable{
 		this.ultimoEvento = ultimoEvento;
 	}
 
-	public EstadoPartida(int idPartida, List<JugadorRejilla> rejillas,
-			String ultimoEvento) {
+	public Turno(int idPartida, List<JugadorRejilla> rejillas,
+                 String ultimoEvento) {
 		super();
 		this.idPartida = idPartida;
 		this.rejillas = rejillas;

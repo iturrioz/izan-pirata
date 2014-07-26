@@ -2,7 +2,6 @@ package models.logic;
 
 import java.util.*;
 
-import models.comm.EstadoPartida;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,6 +15,8 @@ public class Partida {
 	private int indexTurno = 0;
 	
 	private String ultimoEvento = null;
+
+    private EstadoPartida estadoPartida = EstadoPartida.EN_CURSO;
 	
 	public Partida(int idPartida){
 		this.idPartida = idPartida;
@@ -46,7 +47,7 @@ public class Partida {
 		}
 	}
 	
-	public EstadoPartida disparar(int quien, int aQuien, int coordX, int coordY, Torpedo torpedo){
+	public void disparar(int quien, int aQuien, int coordX, int coordY, Torpedo torpedo){
 		
 		Rejilla rejillaDestino = null;
 		
@@ -64,8 +65,6 @@ public class Partida {
 		}
 		
 		indexTurno = (indexTurno+1) % jugadores.size();
-	
-		return new EstadoPartida(this);
 	}
 	
 	public List<Jugador> getJugadores() {
@@ -131,6 +130,8 @@ public class Partida {
             retVal.put("idPartida", idPartida);
             retVal.put("dimX", dimX);
             retVal.put("dimY", dimY);
+            retVal.put("indexTurno", indexTurno);
+            retVal.put("ultimoEvento", ultimoEvento);
             final List<JSONObject> jugadoresJson = new ArrayList<JSONObject>();
             for (Jugador jugador : jugadores) {
                 final JSONObject jugadorObject = new JSONObject();
