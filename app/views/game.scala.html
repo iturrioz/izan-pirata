@@ -1,0 +1,27 @@
+@(partida: models.logic.Partida)
+
+@("Izan Pirata") {
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-push-4">
+          <h4>Zure taula</h4>
+
+          <table id="my-table" class="table table-bordered game-table">
+          </table>
+          <hr>
+          <h4>Etsaiaren taula</h4>
+
+          <table id="enemy-table" class="table table-bordered game-table">
+          </table>
+        </div>
+
+        <div class="col-md-4 col-md-pull-8">
+          <h4>Leyenda</h3>
+          <p>Aquí irá información sobre los colores.</p>
+        </div>
+      </div>
+    </div>
+    <script>
+    var starting = @partida.getJsonString();
+    </script>
+}
