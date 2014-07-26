@@ -1,4 +1,4 @@
-package eus.willix.foss.battleship.logic;
+package models.logic;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,6 +13,9 @@ public class Rejilla {
 		valoresRejilla = new EstadoPosicionRejilla[dimX][];
 		for(int i=0;i<dimX;i++){
 			valoresRejilla[i] = new EstadoPosicionRejilla[dimY];
+            for(int j=0;j<dimY;j++){
+                valoresRejilla[i][j] = EstadoPosicionRejilla.AGUA;
+            }
 		}	
 	}
 
@@ -28,17 +31,17 @@ public class Rejilla {
 		this.valoresRejilla = valoresRejilla;
 	}
 
-    public String getJsonString() {
-        final List<String> rejilla = new ArrayList<String>();
+    public JSONArray getJsonArray() {
+        final List<JSONArray> rejilla = new ArrayList<JSONArray>();
         for (EstadoPosicionRejilla[] fila : valoresRejilla) {
             final List<String> filaList = new ArrayList<String>();
             for (EstadoPosicionRejilla posicion : fila) {
                 filaList.add(posicion.name());
             }
             final JSONArray jsonArray = new JSONArray(filaList);
-            rejilla.add(jsonArray.toString());
+            rejilla.add(jsonArray);
         }
-        return new JSONArray(rejilla).toString();
+        return new JSONArray(rejilla);
     }
 
     private EstadoPosicionRejilla[][] getFromJson(String json) {

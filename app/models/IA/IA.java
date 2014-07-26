@@ -1,6 +1,6 @@
-package eus.willix.foss.battleship.IA;
+package models.IA;
 
-import eus.willix.foss.battleship.logic.Partida;
+import models.logic.Partida;
 
 public abstract class IA {
 	

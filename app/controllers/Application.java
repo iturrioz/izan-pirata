@@ -1,19 +1,11 @@
 package controllers;
 
-import play.*;
+import models.Bomb;
 import play.mvc.*;
 
 import views.html.*;
 
-import models.Person;
-
 import play.data.Form;
-
-import java.util.List;
-
-import play.db.ebean.Model;
-
-import static play.libs.Json.*;
 
 public class Application extends Controller {
 
@@ -21,14 +13,12 @@ public class Application extends Controller {
         return ok(index.render());
     }
 
-//    public static Result addPerson() {
-//    	Person person = Form.form(Person.class).bindFromRequest().get();
-//    	person.save();
-//    	return redirect(routes.Application.index());
-//    }
+    public static Result bomb() {
+        // eskuratu json DBtik
+        Bomb bomb = Form.form(Bomb.class).bindFromRequest().get();
 
-    public static Result bomb(String partidaid, String userid, int column, int row) {
-        // TODO deitu Igorren funtzioa
+        System.out.println(bomb.y);
+        // gordeDB
         return redirect(routes.Application.index());
     }
 }

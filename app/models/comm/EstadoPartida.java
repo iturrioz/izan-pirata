@@ -1,12 +1,12 @@
-package eus.willix.foss.battleship.comm;
+package models.comm;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
-import eus.willix.foss.battleship.logic.Partida;
-import eus.willix.foss.battleship.logic.Rejilla;
+import models.logic.Partida;
+import models.logic.Rejilla;
 
 public class EstadoPartida implements Serializable{
 	private int idPartida = -1;

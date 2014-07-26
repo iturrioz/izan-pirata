@@ -1,13 +1,13 @@
-package eus.willix.foss.battleship.IA;
+package models.IA;
 
 import java.util.List;
 import java.util.Random;
 
-import eus.willix.foss.battleship.logic.EstadoPosicionRejilla;
-import eus.willix.foss.battleship.logic.Jugador;
-import eus.willix.foss.battleship.logic.Partida;
-import eus.willix.foss.battleship.logic.Rejilla;
-import eus.willix.foss.battleship.logic.Torpedo;
+import models.logic.EstadoPosicionRejilla;
+import models.logic.Jugador;
+import models.logic.Partida;
+import models.logic.Rejilla;
+import models.logic.Torpedo;
 
 public class RandomIA extends IA{
 

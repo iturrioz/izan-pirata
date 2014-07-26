@@ -1,4 +1,4 @@
-package eus.willix.foss.battleship.logic;
+package models.logic;
 
 public class Jugador {
 	private int idJugador = -1;
