@@ -47,16 +47,35 @@ public class Partida {
 	
 	public void disparar(int quien, int aQuien, int coordX, int coordY, Torpedo torpedo){
 		
-		Rejilla rejillaDestino = null;
-		
-		rejillaDestino = rejillas.get(aQuien);
+		Rejilla rejillaDestino = rejillas.get(aQuien);
 		
 		switch(rejillaDestino.getValoresRejilla()[coordX][coordY]){
 			case AGUA	:	rejillaDestino.getValoresRejilla()[coordX][coordY] = EstadoPosicionRejilla.AGUA_TOCADA;
-							this.setUltimoEvento(String.format("El disparo de %d ha caido en AGUA",quien));
+							setUltimoEvento(String.format("El disparo de %d ha caido en AGUA",quien));
 							break;
 			case BARCO	:	rejillaDestino.getValoresRejilla()[coordX][coordY] = EstadoPosicionRejilla.BARCO_TOCADO;
-							this.setUltimoEvento(String.format("El disparo de %d ha TOCADO el barco de %d",aQuien));
+
+                            Barco barco = comprobarBarcoHundido(aQuien, coordX, coordY);
+                            if (barco != null && barco.hundido()) {
+                                for (int i=0; i<barco.tipoBarco; i++) {
+                                    int x = barco.horizontal ? barco.coorX + i : barco.coorX;
+                                    int y = barco.horizontal ? barco.coorY : barco.coorY + i;
+                                    rejillaDestino.getValoresRejilla()[x][y] = EstadoPosicionRejilla.BARCO_HUNDIDO;
+                                }
+                                Barco[] barcos = jugadores.get(aQuien).getBarcos();
+                                boolean finalizado = true;
+                                for (Barco barco1 : barcos) {
+                                    finalizado = barco1.hundido() && finalizado;
+                                }
+                                if (finalizado) {
+                                    estadoPartida = EstadoPartida.FINALIZADO;
+                                    setUltimoEvento(String.format("El disparo de %d ha HUNDIDO el barco de %d. %d gana!",aQuien, quien));
+                                } else {
+                                    setUltimoEvento(String.format("El disparo de %d ha HUNDIDO el barco de %d",aQuien));
+                                }
+                            } else {
+                                setUltimoEvento(String.format("El disparo de %d ha TOCADO el barco de %d",aQuien));
+                            }
 							break;
 			
 			default		:	break;
@@ -64,8 +83,13 @@ public class Partida {
 		
 		indexTurno = (indexTurno+1) % jugadores.size();
 	}
-	
-	public List<Jugador> getJugadores() {
+
+    private Barco comprobarBarcoHundido(int aQuien, int coordX, int coordY) {
+        Jugador jugador = jugadores.get(aQuien);
+        return jugador.comprobarBarcoHundido(coordX, coordY);
+    }
+
+    public List<Jugador> getJugadores() {
 		return jugadores;
 	}
 
@@ -81,19 +105,19 @@ public class Partida {
 		this.indexTurno = indexTurno;
 	}
 
-	public void colocarBarco(int quien, int tipoBarco, int coorX, int coorY, boolean horizontal){
+	public void colocarBarco(int quien, Barco barco){
 		Rejilla rejillaDestino = null;
 		
 		rejillaDestino = rejillas.get(quien);
 		
-		if(horizontal){
-			for(int x=coorX-tipoBarco;x<coorX+tipoBarco;x++){
-				rejillaDestino.getValoresRejilla()[x][coorY] = EstadoPosicionRejilla.BARCO;
+		if(barco.horizontal){
+			for(int x=barco.coorX-barco.tipoBarco;x<barco.coorX+barco.tipoBarco;x++){
+				rejillaDestino.getValoresRejilla()[x][barco.coorY] = EstadoPosicionRejilla.BARCO;
 			}
 		}
 		else{
-			for(int y=coorY-tipoBarco;y<coorY+tipoBarco;y++){
-				rejillaDestino.getValoresRejilla()[coorX][y] = EstadoPosicionRejilla.BARCO;
+			for(int y=barco.coorY-barco.tipoBarco;y<barco.coorY+barco.tipoBarco;y++){
+				rejillaDestino.getValoresRejilla()[barco.coorX][y] = EstadoPosicionRejilla.BARCO;
 			}
 		}
 	}
