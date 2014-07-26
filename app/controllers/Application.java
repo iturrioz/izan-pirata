@@ -10,7 +10,7 @@ import play.data.Form;
 public class Application extends Controller {
 
     public static Result index() {
-        return ok(index.render());
+        return ok(index.render(3, 3, 2));
     }
 
     public static Result disparo() {
