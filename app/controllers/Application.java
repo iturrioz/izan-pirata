@@ -1,6 +1,6 @@
 package controllers;
 
-import models.Bomb;
+import models.Disparo;
 import play.mvc.*;
 
 import views.html.*;
@@ -13,9 +13,9 @@ public class Application extends Controller {
         return ok(index.render());
     }
 
-    public static Result bomb() {
+    public static Result disparo() {
         // eskuratu json DBtik
-        Bomb bomb = Form.form(Bomb.class).bindFromRequest().get();
+        Disparo bomb = Form.form(Disparo.class).bindFromRequest().get();
 
         System.out.println(bomb.y);
         // gordeDB

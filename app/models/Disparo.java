@@ -1,6 +1,6 @@
 package models;
 
-public class Bomb {
+public class Disparo {
     public int partida;
     public int jugador;
     public int x;
