@@ -19,7 +19,7 @@
 
     $.post(torpedoUri, data, function (data) {
       location.reload(true);
-    })
+    });
   }
 
   function initializeTable(data) {
