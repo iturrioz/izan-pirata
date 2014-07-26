@@ -132,6 +132,7 @@ public class Partida {
             retVal.put("dimY", dimY);
             retVal.put("indexTurno", indexTurno);
             retVal.put("ultimoEvento", ultimoEvento);
+            retVal.put("estadoPartida", estadoPartida.name());
             final List<JSONObject> jugadoresJson = new ArrayList<JSONObject>();
             for (Jugador jugador : jugadores) {
                 final JSONObject jugadorObject = new JSONObject();
@@ -152,6 +153,9 @@ public class Partida {
             idPartida = obj.getInt("idPartida");
             dimX = obj.getInt("dimX");
             dimY = obj.getInt("dimY");
+            indexTurno = obj.getInt("indexTurno");
+            ultimoEvento = obj.getString("ultimoEvento");
+            estadoPartida = EstadoPartida.valueOf(obj.getString("estadoPartida"));
             final JSONArray jsonArray = obj.getJSONArray("jugadores");
             final Jugador[] jugadorArray = new Jugador[jsonArray.length()];
             rejillas = new HashMap<Integer,Rejilla>();
