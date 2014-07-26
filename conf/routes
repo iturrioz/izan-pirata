@@ -4,6 +4,7 @@
 
 # Home page
 GET     /                 controllers.Application.index()
+POST    /                 controllers.Application.create()
 GET     /game/:gameId     controllers.Application.game(gameId: Int)
 POST    /ships            controllers.Application.ships()
 POST    /shoots           controllers.Application.shoots()

@@ -40,9 +40,8 @@
         return {x: row, y: col};
       }).get();
 
-      $.post('/create', data, function(data) {
-        console.log('Sent table: ');
-        console.log(data);
+      $.post(createUri, data, function(data) {
+        window.location = data;
       });
     });
 

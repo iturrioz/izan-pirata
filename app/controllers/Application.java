@@ -28,7 +28,7 @@ public class Application extends Controller {
         // gameId = new Random().nextInt(100000);
         // session("connected", ""+gameId);
         int gameId = 0;
-        return redirect(controllers.routes.Application.game(gameId));
+        return ok(controllers.routes.Application.game(gameId).url());
     }
 
     public static Result game(int gameId) {
