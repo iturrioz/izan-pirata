@@ -13,7 +13,7 @@
   function initializeTable(data) {
 
     _.each(data.jugadores, function(jugador) {
-      fillTable(jugador.rejilla, jugador.id != 1);
+      fillTable(jugador.rejilla, jugador.id != jugador);
     });
 
     $('#enemy-table td').click(function() {

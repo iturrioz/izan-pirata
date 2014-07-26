@@ -1,4 +1,4 @@
-@(partida: models.logic.Partida)
+@(partida: models.logic.Partida, jugador: Int)
 
 @("Izan Pirata") {
     <div class="container">
@@ -23,5 +23,6 @@
     </div>
     <script>
     var starting = @partida.getJsonString();
+    var player = @jugador;
     </script>
 }
