@@ -16,8 +16,9 @@ public class Application extends Controller {
         int gameId;
         
         try {
-            System.out.println("Game already exists!");
             gameId = Integer.parseInt(session("connected"));
+            System.out.println("Game already exists!");
+            return redirect(controllers.routes.Application.game(gameId));
         } catch (NumberFormatException e) {
             System.out.println("New game");
             gameId = new Random().nextInt(100000);
@@ -26,6 +27,10 @@ public class Application extends Controller {
         partida = new Partida(gameId);
         
         return ok(index.render());
+    }
+
+    public static Result game(int gameId) {
+        return ok("TODO");
     }
 
     public static Result shoots() {
