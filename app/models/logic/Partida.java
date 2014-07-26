@@ -5,34 +5,63 @@ import java.util.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPubSub;
+import com.typesafe.plugin.RedisPlugin;
+import play.libs.Json;
 
 public class Partida {
-	private Map<Integer,Rejilla> rejillas = null;
-	private int idPartida = -1;
-	
-	private final int DIM_X = 3;
-    private final int DIM_Y = 3;
-	private List<Jugador> jugadores = null;
-	private int indexTurno = 0;
-	
-	private String ultimoEvento = null;
 
+    private Map<Integer,Rejilla> rejillas = null;
+    private int idPartida = -1;
+    private int dimX = -1, dimY = -1;
+    private int indexTurno = 0;
+    private List<Jugador> jugadores = null;
+    private String ultimoEvento = null;
     private EstadoPartida estadoPartida = EstadoPartida.EN_CURSO;
-	
-	public Partida(int idPartida){
-		this.idPartida = idPartida;
 
-		jugadores = new ArrayList<Jugador>();
-		Jugador jug = null;
-		jug = new Jugador();
-		jug.setIdJugador(0);
-		jugadores.add(jug);
-		jug = new Jugador();
-		jug.setIdJugador(1);
-		jugadores.add(jug);
-		
-		initPartida();
-	}
+
+    public Partida(int idPartida){
+        this.idPartida = idPartida;
+        load();
+
+        jugadores = new ArrayList<Jugador>();
+        Jugador jug = null;
+        jug = new Jugador();
+        jug.setIdJugador(0);
+        jugadores.add(jug);
+        jug = new Jugador();
+        jug.setIdJugador(1);
+        jugadores.add(jug);
+
+        initPartida();
+    }    
+    
+    
+    public void store() {
+        Jedis j = play.Play.application().plugin(RedisPlugin.class).jedisPool().getResource();
+        try {
+            //All messages are pushed through the pub/sub channel
+            j.set(""+this.idPartida, this.getJsonString());
+            System.out.println("Stored");
+        } finally {
+            play.Play.application().plugin(RedisPlugin.class).jedisPool().returnResource(j);
+        }
+    }
+    
+    public void load() {
+        Jedis j = play.Play.application().plugin(RedisPlugin.class).jedisPool().getResource();
+        try {
+            //All messages are pushed through the pub/sub channel
+            String strPartida = j.get(""+this.idPartida);
+            this.getFromJson(strPartida);
+            System.out.println("loaded");
+        } catch (NullPointerException e) {
+            System.out.println(e);
+        } finally {
+            play.Play.application().plugin(RedisPlugin.class).jedisPool().returnResource(j);
+        }
+    }
 
     public Partida(String json) {
         getFromJson(json);
@@ -168,6 +197,7 @@ public class Partida {
     }
 
     private void getFromJson(String json) {
+        System.out.println(json);
         try {
             final JSONObject obj = new JSONObject(json);
             idPartida = obj.getInt("idPartida");
