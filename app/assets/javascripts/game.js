@@ -1,6 +1,8 @@
 ;(function() {
   'use strict';
 
+  var gameId;
+
   $(function() {
 
     initializeTable(starting);
@@ -8,9 +10,21 @@
 
   function handleClick(row, col) {
     console.log("Click: "+row+","+col);
+    var data = {
+      partida: gameId,
+      jugador: player,
+      x: row,
+      y: col
+    };
+
+    $.post(torpedoUri, data, function (data) {
+      location.reload(true);
+    })
   }
 
   function initializeTable(data) {
+
+    gameId = data.idPartida;
 
     _.each(data.jugadores, function(jugador) {
       fillTable(jugador.rejilla, jugador.id != jugador);
