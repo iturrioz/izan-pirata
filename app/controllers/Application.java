@@ -26,7 +26,7 @@ public class Application extends Controller {
         }
         partida = new Partida(gameId);
         
-        return ok(index.render());
+        return ok(index.render(3, 3, 2));
     }
 
     public static Result game(int gameId) {

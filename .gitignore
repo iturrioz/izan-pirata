@@ -1,6 +1,6 @@
-target/*
-logs/*
-.settings/*
-project/*
+logs
+project/project
+project/target
+target
+tmp
 *~
-

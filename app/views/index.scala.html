@@ -1,15 +1,39 @@
-@()
+@(dimX: Int, dimY: Int, ships: Int)
 
-@main("Welcome to Play") {
-	<script type='text/javascript' src='@routes.Assets.at("javascripts/index.js")'></script>
+@main("Ongi etorri Izan Piratara") {
+    
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Willix ships</h1>
+        <p>Bienvenido al juegazo del año</p>
+        <p><a href="game.html" class="btn btn-primary btn-lg" role="button">Hasi partida</a></p>
+      </div>
+    </div>
 
-	<!--<ul id="persons"></ul>-->
+    <div class="container">
 
-	<form method="POST" action="@routes.Application.shoots()">
-		Partida: <input type="text" name="partida"/><br>
-		Jugador: <input type="text" name="jugador"/><br>
-		X: <input type="text" name="x"/><br>
-		Y: <input type="text" name="y"/><br>
-		<button>Disparar!</button>
-	</form>
+      <div class="row">
+        <div class="col-md-4">
+          <h4>Escoge tus barcos</h4>
+          <p>Te quedan <span id="ships-left"></span> barcos.</p>
+          <p><button id="start-button" disabled class="btn btn-primary">Hasi partida</button></p>
+        </div>
+
+        <div class="col-md-8">
+          <table class="table table-bordered" id="selection-table">
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script>
+    var selectionParameters = {
+        dimX: @dimX,
+        dimY: @dimY,
+        ships: @ships
+    }
+    </script>
+
+	<!--<script type='text/javascript' src='@routes.Assets.at("javascripts/index.js")'></script>-->
+
 }
