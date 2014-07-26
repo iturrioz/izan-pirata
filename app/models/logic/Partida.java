@@ -70,7 +70,7 @@ public class Partida {
 	private void initPartida(){
 		rejillas = new HashMap<Integer,Rejilla>();
 		for(int i=0;i<jugadores.size();i++){
-			rejillas.put(jugadores.get(i).getIdJugador(), new Rejilla(DIM_X,DIM_Y));
+			rejillas.put(jugadores.get(i).getIdJugador(), new Rejilla(dimX, dimY));
 		}
 	}
 	
