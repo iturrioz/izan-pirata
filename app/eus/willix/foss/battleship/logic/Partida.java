@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import eus.willix.foss.battleship.comm.EstadoPartida;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Partida {
 	private Map<Integer,Rejilla> rejillas = null;
@@ -34,6 +37,10 @@ public class Partida {
 		
 		initPartida();
 	}
+
+    public Partida(String json) {
+        getFromJson(json);
+    }
 	
 	private void initPartida(){
 		rejillas = new HashMap<Integer,Rejilla>();
@@ -120,7 +127,42 @@ public class Partida {
 	public void setUltimoEvento(String ultimoEvento) {
 		this.ultimoEvento = ultimoEvento;
 	}
-	
-	
-	
+
+    public String getJsonString() {
+        final JSONObject retVal = new JSONObject();
+        try {
+            retVal.put("idPartida", idPartida);
+            retVal.put("dimX", dimX);
+            retVal.put("dimX", dimY);
+            final List<String> jugadoresJson = new ArrayList<String>();
+            for (Jugador jugador : jugadores) {
+                final JSONObject jugadorObject = new JSONObject();
+                int idJugador = jugador.getIdJugador();
+                retVal.put("id", idJugador);
+                retVal.put("rejilla", rejillas.get(idJugador).getJsonString());
+                jugadoresJson.add(jugadorObject.toString());
+            }
+            final JSONArray jsonArray = new JSONArray(jugadoresJson);
+            retVal.put("jugadores", jsonArray);
+        } catch (JSONException e) { e.printStackTrace();}
+        return retVal.toString();
+    }
+
+    private void getFromJson(String json) {
+        try {
+            final JSONObject obj = new JSONObject(json);
+            idPartida = obj.getInt("idPartida");
+            dimX = obj.getInt("dimX");
+            dimY = obj.getInt("dimY");
+            final JSONArray jsonArray = obj.getJSONArray("jugadores");
+            final Jugador[] jugadors = new Jugador[jsonArray.length()];
+            rejillas = new HashMap<Integer,Rejilla>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                jugadors[i] = new Jugador();
+                jugadors[i].setIdJugador(new JSONObject(jsonArray.getString(i)).getInt("id"));
+                String jsonRejilla = new JSONObject(jsonArray.getString(i)).getString("rejilla");
+                rejillas.put(jugadors[i].getIdJugador(), new Rejilla(jsonRejilla));
+            }
+        } catch (JSONException e) { e.printStackTrace(); }
+    }
 }
